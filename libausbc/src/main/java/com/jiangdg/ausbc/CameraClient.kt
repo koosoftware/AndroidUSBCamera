@@ -190,7 +190,7 @@ class CameraClient internal constructor(builder: Builder) : IPreviewDataCallBack
                     mRenderManager?.addRenderEffect(mDefaultEffect)
                     return@apply
                 }
-                postUITask {
+                //postUITask {
                     val surfaceWidth = getSurfaceWidth()
                     val surfaceHeight = getSurfaceHeight()
                     val surface = getSurface()
@@ -204,7 +204,7 @@ class CameraClient internal constructor(builder: Builder) : IPreviewDataCallBack
                     }
                     mRenderManager?.addRenderEffect(mDefaultEffect)
                     Logger.i(TAG, "Display render, width=$surfaceWidth, height=$surfaceHeight")
-                }
+                //}
             }
         }
     }
