@@ -174,7 +174,7 @@ class CameraClient internal constructor(builder: Builder) : IPreviewDataCallBack
                     override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture?) {
                         surfaceTexture?.let {
                             mCamera?.startPreview(mRequest!!, it)
-                            mCamera?.addPreviewDataCallBack(this@CameraClient)
+                            //mCamera?.addPreviewDataCallBack(this@CameraClient)
                         }
                     }
                 }
