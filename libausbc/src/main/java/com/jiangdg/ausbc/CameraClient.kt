@@ -200,7 +200,7 @@ class CameraClient internal constructor(builder: Builder) : IPreviewDataCallBack
                         mRenderManager?.getCacheEffectList()?.forEach { effect ->
                             mRenderManager?.addRenderEffect(effect)
                         }
-                        return@postUITask
+                        //return@postUITask
                     }
                     mRenderManager?.addRenderEffect(mDefaultEffect)
                     Logger.i(TAG, "Display render, width=$surfaceWidth, height=$surfaceHeight")
