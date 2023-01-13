@@ -453,7 +453,12 @@ public final class USBMonitor {
 					try {
 						// パーミッションがなければ要求する
 						if (DEBUG) XLogWrapper.i(TAG, "start request permission...");
-						//mUsbManager.requestPermission(device, mPermissionIntent);
+						
+						if (device.getProductId() == 3587 && device.getVendorId() == 5426) {
+							//Do not requestPermission for Razer Kiyo
+						} else {
+							mUsbManager.requestPermission(device, mPermissionIntent);
+						}
 					} catch (final Exception e) {
 						// Android5.1.xのGALAXY系でandroid.permission.sec.MDM_APP_MGMTという意味不明の例外生成するみたい
 						XLogWrapper.w(TAG,"request permission failed, e = " + e.getLocalizedMessage() ,e);
