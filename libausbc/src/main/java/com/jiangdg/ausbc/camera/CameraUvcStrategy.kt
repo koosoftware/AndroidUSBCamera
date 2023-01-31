@@ -43,7 +43,7 @@ import kotlin.Exception
  *
  * @author Created by jiangdg on 2021/12/20
  */
-class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
+class CameraUvcStrategy(ctx: Context, deviceId: String?) : ICameraStrategy(ctx) {
     private var mDevSettableFuture: SettableFuture<UsbDevice?>? = null
     private var mCtrlBlockSettableFuture: SettableFuture<USBMonitor.UsbControlBlock?>? = null
     private val mConnectSettableFuture: SettableFuture<Boolean> = SettableFuture()
@@ -57,8 +57,10 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
     private var mUVCCamera: UVCCamera? = null
     private var mDevConnectCallBack: IDeviceConnectCallBack? = null
     private var mCacheDeviceList: MutableList<UsbDevice> = arrayListOf()
+    private var mDeviceId: String = null
 
     init {
+        mDeviceId = deviceId
         register()
     }
 
@@ -90,6 +92,11 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
         if (mCameraInfoMap.containsKey(dev.deviceId)) {
             return
         }
+
+        if (mDeviceId != null && dev.deviceId.equals(mDeviceId) == false) {
+            return
+        }
+
         val cameraInfo = CameraUvcInfo(dev.deviceId.toString()).apply {
             cameraVid = dev.vendorId
             cameraPid = dev.productId
