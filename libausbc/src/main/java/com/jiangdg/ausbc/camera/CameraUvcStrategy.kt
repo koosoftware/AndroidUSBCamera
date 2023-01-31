@@ -57,7 +57,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: String?) : ICameraStrategy(ctx) 
     private var mUVCCamera: UVCCamera? = null
     private var mDevConnectCallBack: IDeviceConnectCallBack? = null
     private var mCacheDeviceList: MutableList<UsbDevice> = arrayListOf()
-    private var mDeviceId: String = null
+    private var mDeviceId: String? = null
 
     init {
         mDeviceId = deviceId
