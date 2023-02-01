@@ -124,6 +124,11 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         val device = mDevSettableFuture?.get()
         device ?: return null
         ctrlBlock ?: return null
+
+        if (mDeviceId != null && mDeviceId != device.deviceId) {
+            return null
+        }
+
         getRequest()?.let { request ->
             val previewWidth = request.previewWidth
             val previewHeight = request.previewHeight
@@ -457,11 +462,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     }
                 }
 
-                if (mDeviceId != null && mDeviceId == device?.deviceId) {
-                    mDevSettableFuture?.set(device)
-                    mCtrlBlockSettableFuture?.set(ctrlBlock)
-                    mConnectSettableFuture.set(true)
-                }
+                mDevSettableFuture?.set(device)
+                mCtrlBlockSettableFuture?.set(ctrlBlock)
+                mConnectSettableFuture.set(true)
             }
 
             /**
