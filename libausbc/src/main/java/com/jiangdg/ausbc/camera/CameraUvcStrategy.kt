@@ -125,10 +125,6 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         device ?: return null
         ctrlBlock ?: return null
 
-        if (mDeviceId != null && mDeviceId != device.deviceId) {
-            return null
-        }
-
         getRequest()?.let { request ->
             val previewWidth = request.previewWidth
             val previewHeight = request.previewHeight
@@ -174,6 +170,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
             }
             mUVCCamera?.setFrameCallback(frameCallBack, UVCCamera.PIXEL_FORMAT_YUV420SP)
             Logger.i(TAG, " createCamera success! request = $request")
+        }
+        if (mDeviceId != null) {
+            switchCameraInternal(mDeviceId.toString())
         }
         return true
     }
