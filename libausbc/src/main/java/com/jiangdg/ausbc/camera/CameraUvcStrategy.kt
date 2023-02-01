@@ -457,7 +457,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     }
                 }
 
-                if (mDeviceId != null && mDeviceId == device.deviceId) {
+                if (mDeviceId != null && mDeviceId == device?.deviceId) {
                     mDevSettableFuture?.set(device)
                     mCtrlBlockSettableFuture?.set(ctrlBlock)
                     mConnectSettableFuture.set(true)
