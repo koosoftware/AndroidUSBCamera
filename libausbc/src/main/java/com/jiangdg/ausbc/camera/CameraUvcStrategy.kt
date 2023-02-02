@@ -122,8 +122,12 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     }
 
     private fun createCamera(): Boolean? {
-        val ctrlBlock = mCtrlBlockSettableFuture?.get()
-        val device = mDevSettableFuture?.get()
+        //val ctrlBlock = mCtrlBlockSettableFuture?.get()
+        //val device = mDevSettableFuture?.get()
+
+        val ctrlBlock = mInitialCtrlBlock
+        val device = mInitialDevice
+
         device ?: return null
         ctrlBlock ?: return null
 
@@ -468,13 +472,6 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 mDevSettableFuture?.set(device)
                 mCtrlBlockSettableFuture?.set(ctrlBlock)
                 mConnectSettableFuture.set(true)
-
-                if (mInitialDevice != null) {
-                    mDevSettableFuture?.set(mInitialDevice)
-                }
-                if (mInitialCtrlBlock != null) {
-                    mCtrlBlockSettableFuture?.set(mInitialCtrlBlock)
-                }
             }
 
             /**
