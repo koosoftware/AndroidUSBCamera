@@ -58,6 +58,8 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     private var mDevConnectCallBack: IDeviceConnectCallBack? = null
     private var mCacheDeviceList: MutableList<UsbDevice> = arrayListOf()
     private var mDeviceId: Int? = null
+    private var mInitialDevice: UsbDevice? = null
+    private var mInitialCtrlBlock: USBMonitor.UsbControlBlock? = null
 
     init {
         mDeviceId = deviceId
@@ -458,13 +460,21 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     }
                 }
 
-                if (mDeviceId != null && mDeviceId != device?.deviceId) {
-                    return
+                if (mDeviceId != null && mDeviceId == device?.deviceId) {
+                    mInitialDevice = device
+                    mInitialCtrlBlock = ctrlBlock
                 }
 
                 mDevSettableFuture?.set(device)
                 mCtrlBlockSettableFuture?.set(ctrlBlock)
                 mConnectSettableFuture.set(true)
+
+                if (mInitialDevice != null) {
+                    mDevSettableFuture?.set(mInitialDevice)
+                }
+                if (mInitialCtrlBlock != null) {
+                    mCtrlBlockSettableFuture?.set(mInitialCtrlBlock)
+                }
             }
 
             /**
