@@ -116,7 +116,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
             realStartPreview()
 
             if (mDeviceId != null) {
-                switchCameraInternal(mDeviceId)
+                switchCameraInternal(mDeviceId.toString())
             }
         } catch (e: Exception) {
             stopPreview()
