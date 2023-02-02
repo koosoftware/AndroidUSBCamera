@@ -440,7 +440,7 @@ public final class USBMonitor {
 	 * @param device
 	 * @return true if fail to request permission
 	 */
-	public synchronized boolean requestPermission(final UsbDevice device) {
+	public synchronized boolean requestPermission(final UsbDevice device, final boolean isConnect) {
 //		if (DEBUG) XLogWrapper.v(TAG, "requestPermission:device=" + device);
 		boolean result = false;
 		if (isRegistered()) {
@@ -448,7 +448,9 @@ public final class USBMonitor {
 				if (DEBUG) XLogWrapper.i(TAG,"request permission, has permission: " + mUsbManager.hasPermission(device));
 				if (mUsbManager.hasPermission(device)) {
 					// call onConnect if app already has permission
-					processConnect(device);
+					if (isConnect) {
+						processConnect(device);
+					}
 				} else {
 					try {
 						// パーミッションがなければ要求する

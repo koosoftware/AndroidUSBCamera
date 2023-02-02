@@ -182,7 +182,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
             Logger.w(TAG, "Usb monitor haven't been registered.")
             return false
         }
-        mUsbMonitor?.requestPermission(device)
+        mUsbMonitor?.requestPermission(device, true)
         return true
     }
 

@@ -58,8 +58,6 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     private var mDevConnectCallBack: IDeviceConnectCallBack? = null
     private var mCacheDeviceList: MutableList<UsbDevice> = arrayListOf()
     private var mDeviceId: Int? = null
-    private var mInitialDevice: UsbDevice? = null
-    private var mInitialCtrlBlock: USBMonitor.UsbControlBlock? = null
 
     init {
         mDeviceId = deviceId
@@ -115,9 +113,6 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
             createCamera()
             realStartPreview()
 
-            if (mDeviceId != null) {
-                switchCameraInternal(mDeviceId.toString())
-            }
         } catch (e: Exception) {
             stopPreview()
             Logger.e(TAG, " preview failed, err = ${e.localizedMessage}", e)
@@ -329,7 +324,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     mCacheDeviceList.add(dev)
                 }
                 stopPreviewInternal()
-                requestCameraPermission(dev)
+                requestCameraPermission(dev, true)
             }
         }
     }
@@ -410,8 +405,18 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     }
                     mDevConnectCallBack?.onAttachDev(device)
                 }
+
                 loadCameraInfoInternal(device)
-                requestCameraPermission(device)
+
+                if (mDeviceId != null) {
+                    if (mDeviceId == device?.deviceId) {
+                        requestCameraPermission(device, true)
+                    } else {
+                        requestCameraPermission(device, false)
+                    }
+                } else {
+                    requestCameraPermission(device, true)
+                }
             }
 
             /**
@@ -462,11 +467,6 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     } else {
                         startPreview(this, getSurfaceHolder())
                     }
-                }
-
-                if (mDeviceId != null && mDeviceId == device?.deviceId) {
-                    mInitialDevice = device
-                    mInitialCtrlBlock = ctrlBlock
                 }
 
                 mDevSettableFuture?.set(device)
@@ -774,7 +774,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         }
     }
 
-    private fun requestCameraPermission(device: UsbDevice?) {
+    private fun requestCameraPermission(device: UsbDevice?, isConnect: Boolean) {
         if (mRequestPermission.get()) {
             return
         }
@@ -786,7 +786,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 return@also
             }
             mRequestPermission.set(true)
-            mUsbMonitor?.requestPermission(dev)
+            mUsbMonitor?.requestPermission(dev, isConnect)
         }
     }
 
