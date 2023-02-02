@@ -114,6 +114,10 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         try {
             createCamera()
             realStartPreview()
+
+            if (mDeviceId != null) {
+                switchCameraInternal(mDeviceId)
+            }
         } catch (e: Exception) {
             stopPreview()
             Logger.e(TAG, " preview failed, err = ${e.localizedMessage}", e)
@@ -122,12 +126,8 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     }
 
     private fun createCamera(): Boolean? {
-        //val ctrlBlock = mCtrlBlockSettableFuture?.get()
-        //val device = mDevSettableFuture?.get()
-
-        val ctrlBlock = mInitialCtrlBlock
-        val device = mInitialDevice
-
+        val ctrlBlock = mCtrlBlockSettableFuture?.get()
+        val device = mDevSettableFuture?.get()
         device ?: return null
         ctrlBlock ?: return null
 
