@@ -476,12 +476,11 @@ public class UVCCamera {
     }
 
 //================================================================================
-	//koo
-	/*public synchronized void setCtrl(final int unit, final int ctrl, final int data, final int len) {
+	public synchronized void setCtrl(final int unit, final int ctrl, final int data, final int len) {
 		if (mNativePtr != 0) {
 			nativeSetCtrl(mNativePtr, unit, ctrl, data, len);
 		}
-	}*/
+	}
 
 	public synchronized void setAutoFocus(final boolean autoFocus) {
     	if (mNativePtr != 0) {
@@ -1136,8 +1135,7 @@ public class UVCCamera {
 	private static final native int nativeGetExposureRel(final long id_camera);
 
 	private final native int nativeUpdateAutoFocusLimit(final long id_camera);
-	//koo
-	//private static final native int nativeSetCtrl(final long id_camera, final int unit, final int ctrl, final int data, final int len);
+	private static final native int nativeSetCtrl(final long id_camera, final int unit, final int ctrl, final int data, final int len);
 	private static final native int nativeSetAutoFocus(final long id_camera, final boolean autofocus);
 	private static final native int nativeGetAutoFocus(final long id_camera);
 
