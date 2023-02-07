@@ -2081,7 +2081,8 @@ static JNINativeMethod methods[] = {
 	{ "nativeGetExposureRel",			"(J)I", (void *) nativeGetExposureRel },
 			
 	{ "nativeUpdateAutoFocusLimit",		"(J)I", (void *) nativeUpdateAutoFocusLimit },
-	{ "nativeSetCtrl",					"(JZ)I", (void *) nativeSetCtrl },
+	//koo
+	//{ "nativeSetCtrl",					"(JZ)I", (void *) nativeSetCtrl },
 	{ "nativeSetAutoFocus",				"(JZ)I", (void *) nativeSetAutoFocus },
 	{ "nativeGetAutoFocus",				"(J)I", (void *) nativeGetAutoFocus },
 

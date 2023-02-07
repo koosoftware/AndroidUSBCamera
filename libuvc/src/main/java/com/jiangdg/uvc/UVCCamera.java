@@ -1136,7 +1136,8 @@ public class UVCCamera {
 	private static final native int nativeGetExposureRel(final long id_camera);
 
 	private final native int nativeUpdateAutoFocusLimit(final long id_camera);
-	private static final native int nativeSetCtrl(final long id_camera, final int unit, final int ctrl, final int data, final int len);
+	//koo
+	//private static final native int nativeSetCtrl(final long id_camera, final int unit, final int ctrl, final int data, final int len);
 	private static final native int nativeSetAutoFocus(final long id_camera, final boolean autofocus);
 	private static final native int nativeGetAutoFocus(final long id_camera);
 
