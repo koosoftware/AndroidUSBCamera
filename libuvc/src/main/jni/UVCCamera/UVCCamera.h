@@ -220,6 +220,7 @@ public:
 	int getExposureRel();
 	
 	int updateAutoFocusLimit(int &min, int &max, int &def);
+	int setCtrl(int unit, int ctrl, void *data, int len);
 	int setAutoFocus(bool autoFocus);
 	bool getAutoFocus();
 

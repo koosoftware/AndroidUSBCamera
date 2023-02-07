@@ -562,6 +562,19 @@ static jint nativeUpdateAutoFocusLimit(JNIEnv *env, jobject thiz,
 	RETURN(result, jint);
 }
 
+//koo
+/*static jint nativeSetCtrl(JNIEnv *env, jobject thiz,
+	ID_TYPE id_camera, jint unit, jint ctrl, jobject data, jint len) {
+
+	jint result = JNI_ERR;
+	ENTER();
+	UVCCamera *camera = reinterpret_cast<UVCCamera *>(id_camera);
+	if (LIKELY(camera)) {
+		result = camera->setCtrl(unit, ctrl, data, len);
+	}
+	RETURN(result, jint);
+}*/
+
 static jint nativeSetAutoFocus(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera, jboolean autofocus) {
 
@@ -2068,6 +2081,7 @@ static JNINativeMethod methods[] = {
 	{ "nativeGetExposureRel",			"(J)I", (void *) nativeGetExposureRel },
 			
 	{ "nativeUpdateAutoFocusLimit",		"(J)I", (void *) nativeUpdateAutoFocusLimit },
+	{ "nativeSetCtrl",					"(JZ)I", (void *) nativeSetCtrl },
 	{ "nativeSetAutoFocus",				"(JZ)I", (void *) nativeSetAutoFocus },
 	{ "nativeGetAutoFocus",				"(J)I", (void *) nativeGetAutoFocus },
 
