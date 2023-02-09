@@ -1036,16 +1036,6 @@ int UVCCamera::updateAutoFocusLimit(int &min, int &max, int &def) {
 	RETURN(ret, int);
 }
 
-int UVCCamera::setCtrl(int unit, int ctrl, void *data, int len) {
-	ENTER();
-
-	int r = UVC_ERROR_ACCESS;
-	if LIKELY((mDeviceHandle) && (mCtrlSupports)) {
-		r = uvc_set_ctrl(mDeviceHandle, unit, ctrl, data, len);
-	}
-	RETURN(r, int);
-}
-
 // オートフォーカスをon/off
 int UVCCamera::setAutoFocus(bool autoFocus) {
 	ENTER();
