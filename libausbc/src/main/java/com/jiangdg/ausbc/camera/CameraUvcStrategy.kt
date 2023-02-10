@@ -160,7 +160,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                         request.previewHeight,
                         MIN_FS,
                         MAX_FS,
-                        UVCCamera.FRAME_FORMAT_YUYV,
+                        UVCCamera.FRAME_FORMAT_MJPEG,
                         UVCCamera.DEFAULT_BANDWIDTH
                     )
                 } catch (e: Exception) {
@@ -349,7 +349,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 if (mUVCCamera?.supportedSizeList?.isNotEmpty() == true) {
                     mUVCCamera?.supportedSizeList
                 } else {
-                    mUVCCamera?.getSupportedSizeList(UVCCamera.FRAME_FORMAT_YUYV)
+                    mUVCCamera?.getSupportedSizeList(UVCCamera.FRAME_FORMAT_MJPEG)
                 }.also { sizeList ->
                     sizeList?.forEach { size ->
                         previewSizeList.find {

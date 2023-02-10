@@ -418,7 +418,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
                         mPreviewSize!!.height,
                         MIN_FS,
                         MAX_FS,
-                        UVCCamera.FRAME_FORMAT_YUYV,
+                        UVCCamera.FRAME_FORMAT_MJPEG,
                         UVCCamera.DEFAULT_BANDWIDTH
                     )
                 } catch (e: Exception) {
@@ -877,7 +877,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
             if (mUvcCamera?.supportedSizeList?.isNotEmpty() == true) {
                 mUvcCamera?.supportedSizeList
             }  else {
-                mUvcCamera?.getSupportedSizeList(UVCCamera.FRAME_FORMAT_YUYV)
+                mUvcCamera?.getSupportedSizeList(UVCCamera.FRAME_FORMAT_MJPEG)
             }.also { sizeList ->
                 sizeList?.forEach { size ->
                     val width = size.width
