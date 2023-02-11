@@ -434,7 +434,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
                     return
                 }
             }
-            mUvcCamera?.setFrameCallback(frameCallBack, UVCCamera.PIXEL_FORMAT_YUV420SP)
+            mUvcCamera?.setFrameCallback(frameCallBack, UVCCamera.PIXEL_FORMAT_YUV)
             // 3. start preview
             mCameraView = cameraView ?: mCameraView
             when(cameraView) {
