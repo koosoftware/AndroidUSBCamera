@@ -43,7 +43,7 @@ import kotlin.Exception
  *
  * @author Created by jiangdg on 2021/12/20
  */
-class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
+class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     private var mDevSettableFuture: SettableFuture<UsbDevice?>? = null
     private var mCtrlBlockSettableFuture: SettableFuture<USBMonitor.UsbControlBlock?>? = null
     private val mConnectSettableFuture: SettableFuture<Boolean> = SettableFuture()
@@ -57,8 +57,10 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
     private var mUVCCamera: UVCCamera? = null
     private var mDevConnectCallBack: IDeviceConnectCallBack? = null
     private var mCacheDeviceList: MutableList<UsbDevice> = arrayListOf()
+    private var mDeviceId: Int? = null
 
     init {
+        mDeviceId = deviceId
         register()
     }
 
@@ -319,7 +321,7 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
                     mCacheDeviceList.add(dev)
                 }
                 stopPreviewInternal()
-                requestCameraPermission(dev)
+                requestCameraPermission(dev, true)
             }
         }
     }
@@ -401,7 +403,17 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
                     mDevConnectCallBack?.onAttachDev(device)
                 }
                 loadCameraInfoInternal(device)
-                requestCameraPermission(device)
+
+                if (mDeviceId != null) {
+                    if (mDeviceId == device?.deviceId) {
+                        stopPreviewInternal()
+                        requestCameraPermission(device, true)
+                    } else {
+                        requestCameraPermission(device, true)
+                    }
+                } else {
+                    requestCameraPermission(device, true)
+                }
             }
 
             /**
@@ -758,7 +770,7 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
         }
     }
 
-    private fun requestCameraPermission(device: UsbDevice?) {
+    private fun requestCameraPermission(device: UsbDevice?, isConnect: Boolean) {
         if (mRequestPermission.get()) {
             return
         }
@@ -770,7 +782,7 @@ class CameraUvcStrategy(ctx: Context) : ICameraStrategy(ctx) {
                 return@also
             }
             mRequestPermission.set(true)
-            mUsbMonitor?.requestPermission(dev)
+            mUsbMonitor?.requestPermission(dev, isConnect)
         }
     }
 

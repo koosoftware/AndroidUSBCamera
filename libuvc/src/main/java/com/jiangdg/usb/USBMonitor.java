@@ -436,7 +436,7 @@ public final class USBMonitor {
 	 * @param device
 	 * @return true if fail to request permission
 	 */
-	public synchronized boolean requestPermission(final UsbDevice device) {
+	public synchronized boolean requestPermission(final UsbDevice device, final boolean isConnect) {
 //		if (DEBUG) XLogWrapper.v(TAG, "requestPermission:device=" + device);
 		boolean result = false;
 		if (isRegistered()) {
@@ -444,12 +444,19 @@ public final class USBMonitor {
 				if (DEBUG) XLogWrapper.i(TAG,"request permission, has permission: " + mUsbManager.hasPermission(device));
 				if (mUsbManager.hasPermission(device)) {
 					// call onConnect if app already has permission
-					processConnect(device);
+					if (isConnect) {
+						processConnect(device);
+					}
 				} else {
 					try {
 						// パーミッションがなければ要求する
 						if (DEBUG) XLogWrapper.i(TAG, "start request permission...");
-						mUsbManager.requestPermission(device, mPermissionIntent);
+
+						if (device.getProductId() == 3587 && device.getVendorId() == 5426) {
+							//Do not requestPermission for Razer Kiyo
+						} else {
+							mUsbManager.requestPermission(device, mPermissionIntent);
+						}
 					} catch (final Exception e) {
 						// Android5.1.xのGALAXY系でandroid.permission.sec.MDM_APP_MGMTという意味不明の例外生成するみたい
 						XLogWrapper.w(TAG,"request permission failed, e = " + e.getLocalizedMessage() ,e);
