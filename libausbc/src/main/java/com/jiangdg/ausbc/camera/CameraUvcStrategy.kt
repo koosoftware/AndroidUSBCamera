@@ -112,9 +112,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
             createCamera()
             realStartPreview()
         } catch (e: Exception) {
-            stopPreview()
-            Logger.e(TAG, " preview failed, err = ${e.localizedMessage}", e)
-            postCameraStatus(CameraStatus(CameraStatus.ERROR, e.localizedMessage))
+            //stopPreview()
+            //Logger.e(TAG, " preview failed, err = ${e.localizedMessage}", e)
+            //postCameraStatus(CameraStatus(CameraStatus.ERROR, e.localizedMessage))
         }
     }
 
