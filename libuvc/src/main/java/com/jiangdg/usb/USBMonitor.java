@@ -538,7 +538,7 @@ public final class USBMonitor {
 						// cleanup
 						ctrlBlock.close();
 					}
-					mDeviceCounts = 0;
+					//mDeviceCounts = 0;
 					processDettach(device);
 				}
 			}
@@ -579,6 +579,8 @@ public final class USBMonitor {
 						});
 					}
 				}
+			} else {
+				mDeviceCounts = n;
 			}
 			mAsyncHandler.postDelayed(this, 2000);	// confirm every 2 seconds
 		}
