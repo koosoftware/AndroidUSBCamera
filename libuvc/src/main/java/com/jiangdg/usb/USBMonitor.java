@@ -568,7 +568,7 @@ public final class USBMonitor {
 			}
 			if ((n > mDeviceCounts) || (m > hasPermissionCounts)) {
 				mDeviceCounts = n;
-				/*if (mOnDeviceConnectListener != null) {
+				if (mOnDeviceConnectListener != null) {
 					for (int i = 0; i < n; i++) {
 						final UsbDevice device = devices.get(i);
 						mAsyncHandler.post(new Runnable() {
@@ -578,7 +578,7 @@ public final class USBMonitor {
 							}
 						});
 					}
-				}*/
+				}
 			} else {
 				mDeviceCounts = n;
 			}

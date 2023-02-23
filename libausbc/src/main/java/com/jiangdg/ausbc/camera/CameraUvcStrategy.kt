@@ -460,9 +460,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 mCtrlBlockSettableFuture = SettableFuture()
                 getRequest()?.apply {
                     if (getSurfaceTexture() != null) {
-                        startPreview(this, getSurfaceTexture())
+                        //startPreview(this, getSurfaceTexture())
                     } else {
-                        startPreview(this, getSurfaceHolder())
+                        //startPreview(this, getSurfaceHolder())
                     }
                 }
                 mDevSettableFuture?.set(device)
