@@ -62,7 +62,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
                     return
                 }
                 mMainHandler.post {
-                    callback?.onAttachDev(device, isConnect)
+                    callback?.onAttachDev(device)
                 }
             }
 
