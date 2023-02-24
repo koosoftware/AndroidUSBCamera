@@ -411,8 +411,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     } else {
                         requestCameraPermission(device, true)
                     }
+                    mDeviceId = null
                 } else {
-                    requestCameraPermission(device, isConnect)
+                    requestCameraPermission(device, false)
                 }
             }
 
