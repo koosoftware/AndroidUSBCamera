@@ -406,12 +406,13 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
 
                 if (mDeviceId != null) {
                     if (mDeviceId == device?.deviceId) {
+                        mDeviceId = null
                         stopPreviewInternal()
-                        requestCameraPermission(device, false)
+                        requestCameraPermission(device, true)
                     } else {
-                        requestCameraPermission(device, false)
+                        mDeviceId = null
+                        requestCameraPermission(device, true)
                     }
-                    mDeviceId = null
                 } else {
                     requestCameraPermission(device, false)
                 }
