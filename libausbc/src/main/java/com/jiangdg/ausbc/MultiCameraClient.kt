@@ -53,7 +53,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
              *
              * @param device usb device info,see [UsbDevice]
              */
-            override fun onAttach(device: UsbDevice?) {
+            override fun onAttach(device: UsbDevice?, isConnect: Boolean) {
                 if (Utils.debugCamera) {
                     Logger.i(TAG, "attach device = ${device?.toString()}")
                 }
@@ -62,7 +62,7 @@ class MultiCameraClient(ctx: Context, callback: IDeviceConnectCallBack?) {
                     return
                 }
                 mMainHandler.post {
-                    callback?.onAttachDev(device)
+                    callback?.onAttachDev(device, isConnect)
                 }
             }
 

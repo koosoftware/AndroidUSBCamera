@@ -91,7 +91,7 @@ public final class USBMonitor {
 		 * called when device attached
 		 * @param device
 		 */
-		public void onAttach(UsbDevice device);
+		public void onAttach(UsbDevice device, boolean isConnect);
 		/**
 		 * called when device dettach(after onDisconnect)
 		 * @param device
@@ -574,7 +574,7 @@ public final class USBMonitor {
 						mAsyncHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								mOnDeviceConnectListener.onAttach(device);
+								mOnDeviceConnectListener.onAttach(device, true);
 							}
 						});
 					}
@@ -632,7 +632,7 @@ public final class USBMonitor {
 			mAsyncHandler.post(new Runnable() {
 				@Override
 				public void run() {
-					mOnDeviceConnectListener.onAttach(device);
+					mOnDeviceConnectListener.onAttach(device, false);
 				}
 			});
 		}

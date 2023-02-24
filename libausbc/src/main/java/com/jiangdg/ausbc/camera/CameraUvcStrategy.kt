@@ -388,7 +388,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
              *
              * @param device usb device info,see [UsbDevice]
              */
-            override fun onAttach(device: UsbDevice?) {
+            override fun onAttach(device: UsbDevice?, isConnect: Boolean) {
                 if (Utils.debugCamera) {
                     Logger.i(TAG, "attach device = ${device?.toString()}")
                 }
@@ -412,7 +412,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                         requestCameraPermission(device, true)
                     }
                 } else {
-                    requestCameraPermission(device, false)
+                    requestCameraPermission(device, isConnect)
                 }
             }
 
