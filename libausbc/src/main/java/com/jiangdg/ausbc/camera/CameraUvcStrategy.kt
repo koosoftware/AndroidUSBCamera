@@ -398,11 +398,14 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 }
 
                 var isAttach: Boolean = false
+                if (!mCameraInfoMap.containsKey(device.deviceId)) {
+                    isAttach = true
+                }
+
                 if (!mCacheDeviceList.contains(device)) {
                     device.let {
                         mCacheDeviceList.add(it)
                     }
-                    isAttach = true
                     mDevConnectCallBack?.onAttachDev(device)
                 }
                 loadCameraInfoInternal(device)
@@ -418,7 +421,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     if (!isConnect) {
                         requestCameraPermission(device, false)
                     } else {
-                        requestCameraPermission(device, false)
+                        requestCameraPermission(device, !isAttach)
                     }
                 }
             }
