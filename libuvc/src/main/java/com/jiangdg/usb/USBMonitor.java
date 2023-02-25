@@ -567,15 +567,21 @@ public final class USBMonitor {
 				m = mHasPermissions.size();
 			}
 
-			if ((n > mDeviceCounts) || (m > hasPermissionCounts)) {
+			boolean isAttach = false;
+			if (n > mDeviceCounts) {
+				isAttach = true;
+			}
+
+			if (isAttach || (m > hasPermissionCounts)) {
 				mDeviceCounts = n;
 				if (mOnDeviceConnectListener != null) {
+					final boolean _isAttach = isAttach;
 					for (int i = 0; i < n; i++) {
 						final UsbDevice device = devices.get(i);
 						mAsyncHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								mOnDeviceConnectListener.onAttach(device, true);
+								mOnDeviceConnectListener.onAttach(device, !_isAttach);
 							}
 						});
 					}
