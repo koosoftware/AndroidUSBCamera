@@ -568,11 +568,11 @@ public final class USBMonitor {
 			}
 
 			boolean isAttach = false;
-			if (n > mDeviceCounts) {
+			if (m > hasPermissionCounts) {
 				isAttach = true;
 			}
 
-			if (isAttach || (m > hasPermissionCounts)) {
+			if ((n > mDeviceCounts) || (isAttach)) {
 				mDeviceCounts = n;
 				if (mOnDeviceConnectListener != null) {
 					final boolean _isAttach = isAttach;
