@@ -58,6 +58,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     private var mDevConnectCallBack: IDeviceConnectCallBack? = null
     private var mCacheDeviceList: MutableList<UsbDevice> = arrayListOf()
     private var mDeviceId: Int? = null
+    private var mAttachedDeviceList: MutableList<UsbDevice> = arrayListOf()
 
     init {
         mDeviceId = deviceId
@@ -397,15 +398,21 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                     return
                 }
 
-                var isAttach: Boolean = false
                 if (!mCacheDeviceList.contains(device)) {
                     device.let {
                         mCacheDeviceList.add(it)
                     }
-                    isAttach = true
                     mDevConnectCallBack?.onAttachDev(device)
                 }
                 loadCameraInfoInternal(device)
+
+                var isAttach: Boolean = false
+                if (!mAttachedDeviceList.contains(device)) {
+                    device.let {
+                        mAttachedDeviceList.add(it)
+                    }
+                    isAttach = true
+                }
 
                 if (mDeviceId != null) {
                     if (mDeviceId == device?.deviceId) {
@@ -415,7 +422,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                         requestCameraPermission(device, true)
                     }
                 } else {
-                    requestCameraPermission(device, isAttach)
+                    requestCameraPermission(device, !isAttach)
                 }
             }
 
@@ -435,6 +442,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 mDevConnectCallBack?.onDetachDec(device)
                 if (mCacheDeviceList.contains(device)) {
                     mCacheDeviceList.remove(device)
+                }
+                if (mAttachedDeviceList.contains(device)) {
+                    mAttachedDeviceList.remove(device)
                 }
                 // 重置正在打开的设备
                 val dev = mDevSettableFuture?.get()
