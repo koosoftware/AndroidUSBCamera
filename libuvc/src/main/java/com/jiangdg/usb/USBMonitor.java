@@ -579,6 +579,7 @@ public final class USBMonitor {
 							@Override
 							public void run() {
 								mOnDeviceConnectListener.onAttach(device, !mIsDeviceCheckLoaded);
+								mIsDeviceCheckLoaded = true;
 							}
 						});
 					}
@@ -586,7 +587,7 @@ public final class USBMonitor {
 			} else {
 				mDeviceCounts = n;
 			}
-			mIsDeviceCheckLoaded = true;
+			
 			mAsyncHandler.postDelayed(this, 2000);	// confirm every 2 seconds
 		}
 	};
