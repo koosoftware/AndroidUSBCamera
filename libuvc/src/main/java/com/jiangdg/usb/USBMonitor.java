@@ -77,7 +77,6 @@ public final class USBMonitor {
 	private final OnDeviceConnectListener mOnDeviceConnectListener;
 	private PendingIntent mPermissionIntent = null;
 	private List<DeviceFilter> mDeviceFilters = new ArrayList<DeviceFilter>();
-	private boolean mIsDeviceCheckLoaded = false; 
 
 	/**
 	 * コールバックをワーカースレッドで呼び出すためのハンドラー
@@ -169,7 +168,6 @@ public final class USBMonitor {
 	 */
 	@SuppressLint("UnspecifiedImmutableFlag")
 	public synchronized void register() throws IllegalStateException {
-		mIsDeviceCheckLoaded = false;
 		if (destroyed) throw new IllegalStateException("already destroyed");
 		if (mPermissionIntent == null) {
 			if (DEBUG) XLogWrapper.i(TAG, "register:");
@@ -198,7 +196,6 @@ public final class USBMonitor {
 	 */
 	public synchronized void unregister() throws IllegalStateException {
 		// 接続チェック用Runnableを削除
-		mIsDeviceCheckLoaded = false;
 		mDeviceCounts = 0;
 		if (!destroyed) {
 			mAsyncHandler.removeCallbacks(mDeviceCheckRunnable);
@@ -578,8 +575,7 @@ public final class USBMonitor {
 						mAsyncHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								mOnDeviceConnectListener.onAttach(device, !mIsDeviceCheckLoaded);
-								mIsDeviceCheckLoaded = true;
+								mOnDeviceConnectListener.onAttach(device, true);
 							}
 						});
 					}
