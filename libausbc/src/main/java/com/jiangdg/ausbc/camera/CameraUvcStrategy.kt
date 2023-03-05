@@ -335,6 +335,10 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         }
     }
 
+    override fun resetMDeviceId() {
+        mDeviceId = null
+    }
+
     override fun getAllPreviewSizes(aspectRatio: Double?): MutableList<PreviewSize>? {
         getRequest()?.let { request ->
             val cameraInfo = mCameraInfoMap.values.find {
@@ -407,11 +411,10 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
 
                 if (mDeviceId != null) {
                     if (mDeviceId == device?.deviceId) {
-                        //mDeviceId = null
+                        // Start specific deviceId
                         stopPreviewInternal()
                         requestCameraPermission(device, true)
                     } else {
-                        //mDeviceId = null
                         requestCameraPermission(device, true)
                     }
                 } else {

@@ -476,6 +476,10 @@ class CameraClient internal constructor(builder: Builder) : IPreviewDataCallBack
         return true
     }
 
+    fun resetMDeviceId() {
+        mCamera?.resetMDeviceId()
+    }
+
 
     /**
      * Get all preview sizes
