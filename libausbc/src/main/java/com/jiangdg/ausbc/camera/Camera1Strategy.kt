@@ -152,6 +152,10 @@ class Camera1Strategy(ctx: Context) : ICameraStrategy(ctx), Camera.PreviewCallba
         }
     }
 
+    override fun resetMDeviceId() {
+
+    }
+
     override fun getAllPreviewSizes(aspectRatio: Double?): MutableList<PreviewSize>? {
         getRequest()?.let { request ->
             val list = mutableListOf<PreviewSize>()

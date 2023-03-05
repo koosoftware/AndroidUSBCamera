@@ -23,6 +23,10 @@ import com.jiangdg.ausbc.camera.bean.PreviewSize
  * @author Created by jiangdg on 2021/12/20
  */
 class CameraxStrategy(ctx: Context): ICameraStrategy(ctx) {
+    override fun resetMDeviceId() {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllPreviewSizes(aspectRatio: Double?): MutableList<PreviewSize> {
         TODO("Not yet implemented")
     }

@@ -193,6 +193,8 @@ abstract class ICameraStrategy(context: Context) : Handler.Callback {
         this.mSurfaceHolder = holder
     }
 
+    abstract fun resetMDeviceId()
+
     /**
      * Get all preview sizes
      *
