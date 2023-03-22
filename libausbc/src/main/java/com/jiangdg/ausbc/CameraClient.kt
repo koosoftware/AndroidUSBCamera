@@ -221,6 +221,7 @@ class CameraClient internal constructor(builder: Builder) : IPreviewDataCallBack
             mRenderManager?.stopRenderScreen()
         }
         mCamera?.stopPreview()
+        mCamera?.close()
     }
 
     /**

@@ -121,6 +121,10 @@ class Camera2Strategy(ctx: Context) : ICameraStrategy(ctx) {
         closeCamera()
     }
 
+    override fun closeInternal() {
+        closeCamera()
+    }
+
     override fun captureImageInternal(savePath: String?) {
         if (! hasCameraPermission() || !hasStoragePermission()) {
             mMainHandler.post {

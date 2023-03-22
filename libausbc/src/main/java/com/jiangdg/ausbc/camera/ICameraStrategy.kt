@@ -108,6 +108,9 @@ abstract class ICameraStrategy(context: Context) : Handler.Callback {
             MSG_SWITCH_CAMERA -> {
                 switchCameraInternal(msg.obj as? String)
             }
+            MSG_CLOSE -> {
+                closeInternal()
+            }
         }
         return true
     }
@@ -161,6 +164,12 @@ abstract class ICameraStrategy(context: Context) : Handler.Callback {
         mThread?.quitSafely()
         mThread = null
         mCameraHandler = null
+    }
+
+    @Synchronized
+    fun close() {
+        mCameraHandler ?: return
+        mCameraHandler?.obtainMessage(MSG_CLOSE)?.sendToTarget()
     }
 
     /**
@@ -282,6 +291,8 @@ abstract class ICameraStrategy(context: Context) : Handler.Callback {
      */
     protected abstract fun stopPreviewInternal()
 
+    protected abstract fun closeInternal()
+
     /**
      * Capture image internal,
      * see [Camera1Strategy] or [Camera2Strategy] or [CameraUvcStrategy]
@@ -383,6 +394,7 @@ abstract class ICameraStrategy(context: Context) : Handler.Callback {
         private const val MSG_STOP_PREVIEW = 0x02
         private const val MSG_CAPTURE_IMAGE = 0x03
         private const val MSG_SWITCH_CAMERA = 0x04
+        private const val MSG_CLOSE = 0x05
 
         internal const val TYPE_FRONT = 0
         internal const val TYPE_BACK = 1

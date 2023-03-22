@@ -77,6 +77,10 @@ class Camera1Strategy(ctx: Context) : ICameraStrategy(ctx), Camera.PreviewCallba
         destroyCamera()
     }
 
+    override fun closeInternal() {
+        destroyCamera()
+    }
+
     override fun captureImageInternal(savePath: String?) {
         val jpegDataCb = Camera.PictureCallback { data, camera ->
             mSaveImageExecutor.submit {

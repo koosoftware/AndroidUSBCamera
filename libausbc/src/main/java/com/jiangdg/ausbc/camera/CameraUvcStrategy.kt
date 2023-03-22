@@ -231,6 +231,10 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         postCameraStatus(CameraStatus(CameraStatus.STOP))
     }
 
+    override fun closeInternal() {
+        mUVCCamera?.close();
+    }
+
     override fun captureImageInternal(savePath: String?) {
         if (!hasCameraPermission() || !hasStoragePermission()) {
             mMainHandler.post {

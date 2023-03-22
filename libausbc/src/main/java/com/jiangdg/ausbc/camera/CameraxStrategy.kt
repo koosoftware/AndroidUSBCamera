@@ -43,6 +43,10 @@ class CameraxStrategy(ctx: Context): ICameraStrategy(ctx) {
         TODO("Not yet implemented")
     }
 
+    override fun closeInternal() {
+        TODO("Not yet implemented")
+    }
+
     override fun captureImageInternal(savePath: String?) {
         TODO("Not yet implemented")
     }
