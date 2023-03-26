@@ -47,9 +47,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     private var mDevSettableFuture: SettableFuture<UsbDevice?>? = null
     private var mCtrlBlockSettableFuture: SettableFuture<USBMonitor.UsbControlBlock?>? = null
     private val mConnectSettableFuture: SettableFuture<Boolean> = SettableFuture()
-    private val mNV21DataQueue: LinkedBlockingDeque<ByteArray> by lazy {
+    /*private val mNV21DataQueue: LinkedBlockingDeque<ByteArray> by lazy {
         LinkedBlockingDeque(MAX_NV21_DATA)
-    }
+    }*/
     private val mRequestPermission: AtomicBoolean by lazy {
         AtomicBoolean(false)
     }
@@ -534,6 +534,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         mUsbMonitor?.unregister()
         mUsbMonitor?.destroy()
         mUsbMonitor = null
+        mNV21DataQueue = null
         if (Utils.debugCamera) {
             Logger.i(TAG, "unRegister uvc device monitor")
         }
@@ -817,5 +818,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         private const val MAX_FS = 60
         private const val MAX_NV21_DATA = 5
         private const val CAPTURE_TIMES_OUT_SEC = 1L
+
+        private val mNV21DataQueue: LinkedBlockingDeque<ByteArray> by lazy {
+            LinkedBlockingDeque(MAX_NV21_DATA)
+        }
     }
 }
