@@ -47,7 +47,9 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
     private var mDevSettableFuture: SettableFuture<UsbDevice?>? = null
     private var mCtrlBlockSettableFuture: SettableFuture<USBMonitor.UsbControlBlock?>? = null
     private val mConnectSettableFuture: SettableFuture<Boolean> = SettableFuture()
-    private var mNV21DataQueue: LinkedBlockingDeque<ByteArray>? = LinkedBlockingDeque<ByteArray>(MAX_NV21_DATA)
+    private val mNV21DataQueue: LinkedBlockingDeque<ByteArray> by lazy {
+        LinkedBlockingDeque(MAX_NV21_DATA)
+    }
     private val mRequestPermission: AtomicBoolean by lazy {
         AtomicBoolean(false)
     }
@@ -245,7 +247,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
             return
         }
         mSaveImageExecutor.submit {
-            val data = mNV21DataQueue!!.pollFirst(CAPTURE_TIMES_OUT_SEC, TimeUnit.SECONDS)
+            val data = mNV21DataQueue.pollFirst(CAPTURE_TIMES_OUT_SEC, TimeUnit.SECONDS)
             if (data == null || getRequest() == null) {
                 mMainHandler.post {
                     mCaptureDataCb?.onError("Times out or camera request is null")
@@ -532,10 +534,6 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         mUsbMonitor?.unregister()
         mUsbMonitor?.destroy()
         mUsbMonitor = null
-
-        mNV21DataQueue!!.remove()
-        mNV21DataQueue!!.clear()
-        mNV21DataQueue = null
         if (Utils.debugCamera) {
             Logger.i(TAG, "unRegister uvc device monitor")
         }
@@ -805,10 +803,10 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
                 val data = ByteArray(capacity())
                 get(data)
                 cb.onPreviewData(data, IPreviewDataCallBack.DataFormat.NV21)
-                if (mNV21DataQueue!!.size >= MAX_NV21_DATA) {
-                    mNV21DataQueue!!.removeLast()
+                if (mNV21DataQueue.size >= MAX_NV21_DATA) {
+                    mNV21DataQueue.removeLast()
                 }
-                mNV21DataQueue!!.offerFirst(data)
+                mNV21DataQueue.offerFirst(data)
             }
         }
     }
