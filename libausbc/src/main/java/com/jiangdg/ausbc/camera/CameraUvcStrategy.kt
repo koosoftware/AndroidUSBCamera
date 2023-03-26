@@ -819,7 +819,7 @@ class CameraUvcStrategy(ctx: Context, deviceId: Int?) : ICameraStrategy(ctx) {
         private const val MAX_NV21_DATA = 5
         private const val CAPTURE_TIMES_OUT_SEC = 1L
 
-        private val mNV21DataQueue: LinkedBlockingDeque<ByteArray> by lazy {
+        private var mNV21DataQueue: LinkedBlockingDeque<ByteArray>? by lazy {
             LinkedBlockingDeque(MAX_NV21_DATA)
         }
     }
